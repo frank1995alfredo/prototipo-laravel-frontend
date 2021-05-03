@@ -1,17 +1,11 @@
 import React, { Fragment } from "react";
 import Login from "../Login/Login"
+import useAuth from "../auth/useAuth";
 
 const Navbar = () => {
-  const salir = (e) => {
-    localStorage.removeItem("token");
-    e.preventDefault();
-    return(<Login/>)
-    
-    console.log("salir");
-    
-  };
 
 
+  const auth = useAuth();
 
   return (
     <Fragment>
@@ -83,9 +77,7 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
-            <form onSubmit={salir}>
-              <button type="submit">Salir</button>
-            </form>
+            <button  onClick={auth.logout}>Logout</button>
           </div>
         </div>
       </nav>

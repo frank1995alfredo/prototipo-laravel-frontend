@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios"
 import URL from "../config/URL";
-import valor_token from "../config/valor_token"
 
 const ModalEliminar = ({
   dataEliminar,
@@ -10,10 +9,13 @@ const ModalEliminar = ({
 }) => {
 
     const peticionDelete = async () => {
+      const valor_token = localStorage.getItem("token")
         await axios
           .delete(`${URL}/eliminarCliente/` + dataEliminar.id, {
             headers:
             {
+              "content-type": "application/json",
+              "Accept": "application/json",
               Authorization: `Bearer ${valor_token.replace(/['"]+/g, '')}`,
             },
           })

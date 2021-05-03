@@ -8,30 +8,35 @@ const ModalAgregar = ({ addCliente }) => {
     nomcliente: "",
     cedularuc: "",
     direccion: "",
+    pais: "",
+    ciudad: "",
     correoelec: "",
     telefono1: "",
   }; //se inicializan los inputs
-  const [clien, setClien] = useState(initialFormState);
+  const [clien, setClien] = useState(initialFormState)
 
   //esta funcion es importante para poder escribir en los input
   const handleInputChange = (event) => {
-    const { name, value } = event.currentTarget;
-    setClien({ ...clien, [name]: value });
+    const { name, value } = event.currentTarget
+    setClien({ ...clien, [name]: value })
     console.log(clien);
   };
 
-  const guardarCategoria = async (event) => {
-    event.preventDefault();
+  const agregarCliente = async (event) => {
+    event.preventDefault()
+    const valor_token = localStorage.getItem("token")
     try {
       await axios
         .post(`${URL}/agregarCliente`, clien, {
           headers: {
+            "content-type": "application/json",
+            "Accept": "application/json",
             Authorization: `Bearer ${valor_token.replace(/['"]+/g, '')}`,
           },
         })
         .then((response) => {
-          addCliente(response.data.data);
-          console.log(response.data);
+          addCliente(response.data.data)
+          console.log(response.data)
         });
     } catch (error) {
       console.log(error);
@@ -59,7 +64,7 @@ const ModalAgregar = ({ addCliente }) => {
               aria-label="Close"
             ></button>
           </div>
-          <form onSubmit={guardarCategoria}>
+          <form onSubmit={agregarCliente}>
             <div className="modal-body">
               <div className="mb-3 row">
                 <label for="descripcion" className="col-sm-2 col-form-label">
@@ -127,6 +132,34 @@ const ModalAgregar = ({ addCliente }) => {
                     className="form-control"
                     name="telefono1"
                     value={clien.telefono1}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <label for="ciudad" className="col-sm-2 col-form-label">
+                  Ciudad
+                </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="ciudad"
+                    value={clien.ciudad}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3 row">
+                <label for="pais" className="col-sm-2 col-form-label">
+                  Pais
+                </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="pais"
+                    value={clien.pais}
                     onChange={handleInputChange}
                   />
                 </div>
